@@ -10,7 +10,6 @@
 		"format": "prettier --write \"src/**/*.vue\" \"src/**/*.ts\""
 	},
 	"dependencies": {
-		"genji-es": "^1.0.2",
 		"pinia": "3.0.1",
 		"store2": "^2.14.4",
 		"vant": "^3.0.17",
