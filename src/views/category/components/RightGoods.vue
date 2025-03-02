@@ -7,7 +7,9 @@
 			<div class="grid grid-cols-3 gap-y-5">
 				<div v-for="item in cateGory?.list" :key="item.name" class="flex flex-col justify-start items-center">
 					<img v-lazy="item.icon" :alt="item.name" class="img" />
-					<p class="text-xs font-light text-gray-800 dark:text-gray-200">{{ item.name }}</p>
+					<p class="text-xs font-light text-gray-800 dark:text-gray-200">
+						{{ item.name }}
+					</p>
 				</div>
 			</div>
 		</div>
@@ -16,6 +18,7 @@
 
 <script lang="ts">
 import { CateGory } from '@src/store/category'
+
 import { defineComponent, onMounted, PropType } from 'vue'
 
 export default defineComponent({
