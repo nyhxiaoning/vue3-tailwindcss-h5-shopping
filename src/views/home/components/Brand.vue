@@ -1,6 +1,18 @@
 <template>
 	<div
-		class="w-full h-24 mt-2 rounded-md bg-white dark:bg-xieyezi-content shadow-sm wrapper whitespace-nowrap relative overflow-hidden"
+		class="
+			w-full
+			h-24
+			mt-2
+			rounded-md
+			bg-white
+			dark:bg-xieyezi-content
+			shadow-sm
+			wrapper
+			whitespace-nowrap
+			relative
+			overflow-hidden
+		"
 	>
 		<div class="scroll-content inline-block pt-3">
 			<div class="scroll-item inline-block" v-for="(item, index) in list" :key="index">
