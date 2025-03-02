@@ -1,18 +1,6 @@
 <template>
 	<div
-		class="
-			w-full
-			h-24
-			mt-2
-			rounded-md
-			bg-white
-			dark:bg-xieyezi-content
-			shadow-sm
-			wrapper
-			whitespace-nowrap
-			relative
-			overflow-hidden
-		"
+		class="w-full h-24 mt-2 rounded-md bg-white dark:bg-xieyezi-content shadow-sm wrapper whitespace-nowrap relative overflow-hidden"
 	>
 		<div class="scroll-content inline-block pt-3">
 			<div class="scroll-item inline-block" v-for="(item, index) in list" :key="index">
@@ -31,7 +19,6 @@
 import { NameWithIcon } from '@src/store/home'
 import { defineComponent, onMounted, PropType } from 'vue'
 import BScroll from '@better-scroll/core'
-import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll'
 
 export default defineComponent({
 	name: 'Brand',
@@ -39,7 +26,7 @@ export default defineComponent({
 		list: Array as PropType<Array<NameWithIcon>>
 	},
 	setup() {
-		let bscroll: BScrollConstructor<{}>
+		let bscroll
 
 		onMounted(() => {
 			bscroll = new BScroll('.wrapper' as any, {

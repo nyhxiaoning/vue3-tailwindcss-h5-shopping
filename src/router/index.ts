@@ -5,6 +5,12 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
 		name: 'Index',
+		meta: {
+			title: '首页',
+			breadcrumb: true,
+			// auth: true
+			invisible: true
+		},
 		component: () => import('../views/Index/Index.vue')
 	},
 	{

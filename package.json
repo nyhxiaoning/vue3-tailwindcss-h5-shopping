@@ -14,12 +14,15 @@
 	},
 	"dependencies": {
 		"genji-es": "^1.0.2",
+		"pinia": "3.0.1",
+		"store2": "^2.14.4",
 		"vant": "^3.0.17",
 		"vue": "^3.0.5",
+		"vue-demi": "^0.14.10",
 		"vue-router": "4.4.5"
 	},
 	"devDependencies": {
-		"@better-scroll/core": "^2.3.1",
+		"@better-scroll/core": "^2.5.1",
 		"@commitlint/cli": "^12.1.4",
 		"@types/axios": "^0.14.0",
 		"@types/node": "^15.6.0",

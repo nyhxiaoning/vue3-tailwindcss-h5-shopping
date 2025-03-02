@@ -1,15 +1,5 @@
-import create, { State } from 'genji-es'
+import { defineStore } from 'pinia'
 import axios from 'axios'
-
-export interface HomeState extends State {
-	isFetching: boolean
-	banerList: string[]
-	cateGoryList: Array<NameWithIcon>
-	brandList: Array<NameWithIcon>
-	hotList: Array<GoodItem>
-	getHomeData: () => Promise<void>
-	toggleLoading: () => void
-}
 
 export interface NameWithIcon {
 	name: string
@@ -23,25 +13,42 @@ export interface GoodItem {
 	goodsPicUrl: string
 }
 
-const useStore = create<HomeState>((set, get) => ({
-	isFetching: false,
-	banerList: [],
-	cateGoryList: [],
-	brandList: [],
-	hotList: [],
-	toggleLoading: () => set((state) => ({ isFetching: !state.isFetching })),
-	getHomeData: async () => {
-		set({ isFetching: true })
-		const res = await axios.get('/api/index')
-		const { banerList, cateGoryList, brandList, hotList } = res.data
-		set({
-			banerList,
-			cateGoryList,
-			brandList,
-			hotList
-		})
-		set({ isFetching: false })
-	}
-}))
+export interface HomeState {
+	isFetching: boolean
+	banerList: string[]
+	cateGoryList: Array<NameWithIcon>
+	brandList: Array<NameWithIcon>
+	hotList: Array<GoodItem>
+}
 
-export default useStore
+export const useHomeStore = defineStore('home', {
+	state: (): HomeState => ({
+		isFetching: false,
+		banerList: [],
+		cateGoryList: [],
+		brandList: [],
+		hotList: []
+	}),
+
+	actions: {
+		toggleLoading() {
+			this.isFetching = !this.isFetching
+		},
+
+		async getHomeData() {
+			this.isFetching = true
+			try {
+				const res = await axios.get('/api/index')
+				const { banerList, cateGoryList, brandList, hotList } = res.data
+				this.banerList = banerList
+				this.cateGoryList = cateGoryList
+				this.brandList = brandList
+				this.hotList = hotList
+			} catch (error) {
+				console.error('获取首页数据失败', error)
+			} finally {
+				this.isFetching = false
+			}
+		}
+	}
+})

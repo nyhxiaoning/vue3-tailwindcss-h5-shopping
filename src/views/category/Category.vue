@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
-import useStore from '@src/store/category'
+import { useCategoryStore } from '@src/store/category'
 import { useDark } from '@vueuse/core'
 import Head from '@components/Head.vue'
 import Search from '@components/Search.vue'
@@ -41,14 +41,17 @@ export default defineComponent({
 	setup() {
 		const active = ref(0)
 		const isDark = useDark()
-		const [isFetching, categoryList, getCategoryData] = useStore((state) => [
-			state.isFetching,
-			state.categoryList,
-			state.getCategoryData
-		])
+		// 在组件中使用
+		const categoryStore = useCategoryStore()
+
+		// 获取状态属性
+
+		const isFetching = categoryStore.isFetching
+
+		const categoryList = categoryStore.categoryList
 
 		onMounted(() => {
-			getCategoryData()
+			categoryStore.getCategoryData()
 		})
 
 		const indexChange = (index: number) => {

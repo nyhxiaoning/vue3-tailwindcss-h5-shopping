@@ -1,12 +1,6 @@
-import create, { State } from 'genji-es'
+import { defineStore } from 'pinia'
 import axios from 'axios'
 import { NameWithIcon } from './home'
-
-export interface HomeState extends State {
-	isFetching: boolean
-	categoryList: Array<CateGory>
-	getCategoryData: () => Promise<void>
-}
 
 export interface CateGory {
 	name: string
@@ -14,18 +8,29 @@ export interface CateGory {
 	list: Array<NameWithIcon>
 }
 
-const useStore = create<HomeState>((set, get) => ({
-	isFetching: false,
-	categoryList: [],
-	getCategoryData: async () => {
-		set({ isFetching: true })
-		const res = await axios.get('/api/category')
-		const { categoryData } = res.data
-		set({
-			categoryList: categoryData,
-			isFetching: false
-		})
-	}
-}))
+export interface HomeState {
+	isFetching: boolean
+	categoryList: Array<CateGory>
+}
 
-export default useStore
+export const useCategoryStore = defineStore('category', {
+	state: (): HomeState => ({
+		isFetching: false,
+		categoryList: []
+	}),
+
+	actions: {
+		async getCategoryData() {
+			this.isFetching = true
+			try {
+				const res = await axios.get('/api/category')
+				const { categoryData } = res.data
+				this.categoryList = categoryData
+			} catch (error) {
+				console.error('获取分类数据失败', error)
+			} finally {
+				this.isFetching = false
+			}
+		}
+	}
+})

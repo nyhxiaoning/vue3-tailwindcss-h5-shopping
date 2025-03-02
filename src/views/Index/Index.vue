@@ -1,4 +1,5 @@
 <template>
+	<div>test</div>
 	<Home v-if="active === 0"></Home>
 	<Category v-if="active === 1"></Category>
 	<Order v-if="active === 2"></Order>
@@ -39,6 +40,7 @@ export default defineComponent({
 		User
 	},
 	setup() {
+		console.log('index', '接口访问了Index页面？？？？')
 		let active = ref(0)
 		const icons = reactive([
 			{

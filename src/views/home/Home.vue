@@ -1,6 +1,6 @@
 <template>
 	<div v-if="isFetching" class="flex justify-center items-center w-screen h-screen">
-		<van-loading color="#8B5CF6"> 疯狂加载中...</van-loading>
+		<van-loading color="#8B5CF6"> 疯狂的home页面加载中...</van-loading>
 	</div>
 	<div v-else class="bg-gray-100 h-full dark:bg-xieyezi-black flex flex-col items-center overflow-hidden pb-12">
 		<!-- header -->
@@ -33,7 +33,7 @@ import LeftTitle from '@components/LeftTitle.vue'
 import Category from './components/Category.vue'
 import Brand from './components/Brand.vue'
 import HotList from './components/HotList.vue'
-import useStore from '../../store/home'
+import { useHomeStore } from '../../store/home'
 
 export default defineComponent({
 	name: 'Home',
@@ -50,17 +50,38 @@ export default defineComponent({
 		const isDark = useDark()
 		let brandRef = ref<any>(null)
 
-		const [isFetching, banerList, cateGoryList, brandList, hotList, getHomeData] = useStore((state) => [
-			state.isFetching,
-			state.banerList,
-			state.cateGoryList,
-			state.brandList,
-			state.hotList,
-			state.getHomeData
-		])
+		// 在组件中使用
+		const homeStore = useHomeStore()
+
+		// 获取状态属性
+		const isFetching = homeStore.isFetching
+		const banerList = homeStore.banerList as any
+		const cateGoryList = homeStore.cateGoryList
+		const brandList = homeStore.brandList
+		const hotList = homeStore.hotList
+
+		// 调用 actions
+		const fetchData = async () => {
+			await homeStore.getHomeData()
+			// 这里可以在调用 getHomeData 后获取更新后的数据
+			console.log(homeStore.banerList, homeStore.cateGoryList)
+		}
+
+		// 使用 toggleLoading 切换加载状态
+		const toggleLoading = () => {
+			homeStore.toggleLoading()
+		}
+		// const [isFetching, banerList, cateGoryList, brandList, hotList, getHomeData] = useStore((state) => [
+		// 	state.isFetching,
+		// 	state.banerList,
+		// 	state.cateGoryList,
+		// 	state.brandList,
+		// 	state.hotList,
+		// 	state.getHomeData
+		// ])
 
 		const banners = computed(() =>
-			banerList.value.map((e: string) => {
+			banerList?.value.map((e: string) => {
 				return {
 					imgUrl: e,
 					url: ''
@@ -69,7 +90,8 @@ export default defineComponent({
 		)
 
 		onMounted(() => {
-			getHomeData()
+			fetchData()
+			toggleLoading()
 		})
 
 		const keyWordChange = (e: string) => {
