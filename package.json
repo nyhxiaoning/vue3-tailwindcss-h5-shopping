@@ -5,12 +5,9 @@
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",
 		"serve": "vite preview",
-		"prepare": "husky install",
-		"pre-commit": "yarn lint-staged",
 		"lint": "eslint src --ext .ts,.vue",
 		"lint:fix": "eslint --fix --ext src --ext .ts,.vue",
-		"format": "prettier --write \"src/**/*.vue\" \"src/**/*.ts\"",
-		"commit": "git-cz"
+		"format": "prettier --write \"src/**/*.vue\" \"src/**/*.ts\""
 	},
 	"dependencies": {
 		"genji-es": "^1.0.2",
