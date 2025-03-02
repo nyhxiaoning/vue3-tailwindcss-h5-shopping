@@ -1,7 +1,9 @@
 <template>
+	<div @click="testPersist">点击测试持久化</div>
 	<div v-if="isFetching" class="flex justify-center items-center w-screen h-screen">
 		<van-loading color="#8B5CF6"> 疯狂的home页面加载中...</van-loading>
 	</div>
+
 	<div v-else class="bg-gray-100 h-full dark:bg-xieyezi-black flex flex-col items-center overflow-hidden pb-12">
 		<!-- header -->
 		<Head title="首页" :back="false">
@@ -59,7 +61,8 @@ export default defineComponent({
 		const cateGoryList = homeStore.cateGoryList
 		const brandList = homeStore.brandList
 		const hotList = homeStore.hotList
-
+		const numberValue = homeStore.numberValue
+		console.log(homeStore.numberValue)
 		// 调用 actions
 		const fetchData = async () => {
 			await homeStore.getHomeData()
@@ -80,13 +83,15 @@ export default defineComponent({
 		// 	state.getHomeData
 		// ])
 
-		const banners = computed(() =>
-			banerList?.value.map((e: string) => {
-				return {
-					imgUrl: e,
-					url: ''
-				}
-			})
+		const banners = computed(
+			() =>
+				banerList.length &&
+				banerList?.value.map((e: string) => {
+					return {
+						imgUrl: e,
+						url: ''
+					}
+				})
 		)
 
 		onMounted(() => {
@@ -102,7 +107,13 @@ export default defineComponent({
 			console.log('去搜索页')
 		}
 
+		const testPersist = () => {
+			console.log('点击测试持久化')
+			homeStore.changeNumberValue(133)
+		}
+
 		return {
+			testPersist,
 			brandRef,
 			isDark,
 			isFetching,

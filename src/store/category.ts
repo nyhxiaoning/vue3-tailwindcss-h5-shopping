@@ -32,5 +32,6 @@ export const useCategoryStore = defineStore('category', {
 				this.isFetching = false
 			}
 		}
-	}
+	},
+	persist: true // 持久化配置
 })

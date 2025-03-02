@@ -1,6 +1,7 @@
 <template>
 	<div class="container mx-auto h-screen bg-white dark:bg-xieyezi-black flex flex-col">
 		<!-- head logo -->
+		<div @click="testPersist">点击测试持久化</div>
 		<div class="flex flex-col h-2/5 justify-center items-center">
 			<div class="shadow w-16 h-16">
 				<img :src="logoUrl" alt="airi logo" />
@@ -31,21 +32,7 @@
 		<!-- submit button -->
 		<div
 			@click="login"
-			class="
-				w-10/12
-				h-14
-				shadow-md
-				self-center
-				flex flex-row
-				justify-center
-				items-center
-				mt-8
-				rounded-full
-				bg-gradient-to-r
-				from-purple-300
-				via-purple-400
-				to-purple-500
-			"
+			class="w-10/12 h-14 shadow-md self-center flex flex-row justify-center items-center mt-8 rounded-full bg-gradient-to-r from-purple-300 via-purple-400 to-purple-500"
 		>
 			<p class="text-white text-base font-medium">登录</p>
 		</div>
@@ -62,6 +49,7 @@ import { defineComponent, ref } from 'vue'
 import logoUrl from '@assets/logo.png'
 import { Notify } from 'vant'
 import { useRouter } from 'vue-router'
+import { useHomeStore } from '../../store/home'
 
 export default defineComponent({
 	name: 'Login',
@@ -69,7 +57,8 @@ export default defineComponent({
 		const userName = ref('')
 		const passWord = ref('')
 		const route = useRouter()
-
+		// 在组件中使用
+		const homeStore = useHomeStore()
 		const login = () => {
 			if (userName.value === '') {
 				Notify({
@@ -93,7 +82,16 @@ export default defineComponent({
 			route.replace({ name: 'Index' })
 		}
 
+		const testPersist = () => {
+			console.log('点击测试持久化')
+			homeStore.changeNumberValue(133)
+			console.log(homeStore.numberValue)
+		}
+
+		console.log('', homeStore.numberValue, 'init')
+
 		return {
+			testPersist,
 			logoUrl,
 			userName,
 			passWord,

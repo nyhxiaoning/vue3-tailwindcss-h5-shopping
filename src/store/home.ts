@@ -19,6 +19,7 @@ export interface HomeState {
 	cateGoryList: Array<NameWithIcon>
 	brandList: Array<NameWithIcon>
 	hotList: Array<GoodItem>
+	numberValue: number
 }
 
 export const useHomeStore = defineStore('home', {
@@ -27,12 +28,16 @@ export const useHomeStore = defineStore('home', {
 		banerList: [],
 		cateGoryList: [],
 		brandList: [],
-		hotList: []
+		hotList: [],
+		numberValue: 0
 	}),
 
 	actions: {
 		toggleLoading() {
 			this.isFetching = !this.isFetching
+		},
+		changeNumberValue(value: number) {
+			this.numberValue = value
 		},
 
 		async getHomeData() {
@@ -50,5 +55,6 @@ export const useHomeStore = defineStore('home', {
 				this.isFetching = false
 			}
 		}
-	}
+	},
+	persist: true // 持久化配置
 })
